@@ -1,0 +1,9 @@
+export const LOCAL_STORAGE_CONSTANT = {
+  LANGUAGE_KEY: 'lk',
+  REDIRECT_TO: 'cd_rdto',
+  LOGIN_TOKEN: 'lt',
+  USER_ROLE: 'ur',
+  CURRENT_LANGUAGE_STATE_KEY: 'clsk',
+  LAST_GLOBAL_NOTIFICATION_FETCH_TIME: 'lgnft',
+  MFA: 'mfa'
+};

@@ -1,0 +1,56 @@
+image: node:16.13.1
+
+pipelines:
+  custom:
+    prod-deployment:
+      - step:
+          name: Build production app
+          caches:
+            - node
+          services:
+            - docker
+          size: 2x
+          script:
+            - npm install --legacy-peer-deps
+            - npm install -g @angular/cli@15.0.1
+            - npm run build:prod
+          artifacts:
+            - dist/calopad-widget/**
+
+      - step:
+          name: Deploy artifacts using SCP to Production Server
+          deployment: production
+          script:
+            - pipe: atlassian/scp-deploy:1.2.1
+              variables:
+                USER: $USERNAME_PROD
+                SERVER: $SERVER_PROD
+                REMOTE_PATH: "/srv/production/card-widget.calopad.com"
+                LOCAL_PATH: "dist/calopad-widget/**"
+
+    dev-deployment:
+      - step:
+          name: Build development app
+          caches:
+            - node
+          services:
+            - docker
+          size: 2x
+          script:
+            - npm install --legacy-peer-deps
+            - npm install -g @angular/cli@15.0.1
+            - npm run build:dev
+          artifacts:
+            - dist/calopad-widget/**
+
+      - step:
+          name: Deploy artifacts using SCP to Development Server
+          deployment: staging
+          size: 2x
+          script:
+            - pipe: atlassian/scp-deploy:1.2.1
+              variables:
+                USER: $USERNAME
+                SERVER: $SERVER
+                REMOTE_PATH: "/var/www/card-widget-dev.calopad.com"
+                LOCAL_PATH: "dist/calopad-widget/**"

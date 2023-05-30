@@ -1,0 +1,14 @@
+.cp-tel-input {
+  font-family: var(--base-font);
+  border: solid 1px var(--gray-50);
+  border-radius: 5px;
+  padding: 0 16px;
+  outline: none;
+  height: 40px;
+  width: 100%;
+}
+
+.field-error {
+  border-color: var(--red);
+  color: var(--red);
+}
